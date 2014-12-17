@@ -13,6 +13,7 @@
 		9204F29F1A420411002DDC3E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9204F29E1A420411002DDC3E /* Images.xcassets */; };
 		9204F2A21A420411002DDC3E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9204F2A01A420411002DDC3E /* LaunchScreen.xib */; };
 		9204F2AE1A420411002DDC3E /* Jenkins_ShakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9204F2AD1A420411002DDC3E /* Jenkins_ShakeTests.swift */; };
+		9204F2B81A420643002DDC3E /* image.png in Resources */ = {isa = PBXBuildFile; fileRef = 9204F2B71A420643002DDC3E /* image.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		9204F2A71A420411002DDC3E /* Jenkins ShakeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Jenkins ShakeTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9204F2AC1A420411002DDC3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9204F2AD1A420411002DDC3E /* Jenkins_ShakeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jenkins_ShakeTests.swift; sourceTree = "<group>"; };
+		9204F2B71A420643002DDC3E /* image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			children = (
 				9204F2971A420411002DDC3E /* AppDelegate.swift */,
 				9204F2991A420411002DDC3E /* ViewController.swift */,
+				9204F2B91A420650002DDC3E /* Images */,
 				9204F29B1A420411002DDC3E /* Main.storyboard */,
 				9204F29E1A420411002DDC3E /* Images.xcassets */,
 				9204F2A01A420411002DDC3E /* LaunchScreen.xib */,
@@ -110,6 +113,14 @@
 				9204F2AC1A420411002DDC3E /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9204F2B91A420650002DDC3E /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				9204F2B71A420643002DDC3E /* image.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,6 +206,7 @@
 				9204F29D1A420411002DDC3E /* Main.storyboard in Resources */,
 				9204F2A21A420411002DDC3E /* LaunchScreen.xib in Resources */,
 				9204F29F1A420411002DDC3E /* Images.xcassets in Resources */,
+				9204F2B81A420643002DDC3E /* image.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +351,7 @@
 				INFOPLIST_FILE = "Jenkins Shake/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -349,6 +362,7 @@
 				INFOPLIST_FILE = "Jenkins Shake/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

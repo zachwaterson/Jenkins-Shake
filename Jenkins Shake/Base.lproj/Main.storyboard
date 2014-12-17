@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="Jenkins_Shake" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -15,11 +17,54 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C3N-fC-oo8">
+                                <rect key="frame" x="16" y="550" width="98" height="30"/>
+                                <state key="normal" title="Choose Photo">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="didPressChoosePhotoButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="JUD-Ux-Ksu"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cO1-2F-gq3">
+                                <rect key="frame" x="550" y="550" width="34" height="30"/>
+                                <state key="normal" title="Save">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qkR-mr-Lss">
+                                <rect key="frame" x="0.0" y="20" width="600" height="600"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="qkR-mr-Lss" secondAttribute="height" multiplier="1:1" id="7gS-Wj-ANe"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="C3N-fC-oo8" firstAttribute="top" secondItem="qkR-mr-Lss" secondAttribute="bottom" constant="30" id="8Am-CB-HDp"/>
+                            <constraint firstItem="qkR-mr-Lss" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="Swl-Xh-El4"/>
+                            <constraint firstItem="C3N-fC-oo8" firstAttribute="baseline" secondItem="cO1-2F-gq3" secondAttribute="baseline" id="UYS-a0-E0I"/>
+                            <constraint firstItem="cO1-2F-gq3" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="b0k-RG-laV"/>
+                            <constraint firstItem="C3N-fC-oo8" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="eFj-pi-1gV"/>
+                            <constraint firstAttribute="width" secondItem="qkR-mr-Lss" secondAttribute="width" id="gtj-il-GbS"/>
+                            <constraint firstAttribute="bottom" secondItem="C3N-fC-oo8" secondAttribute="bottom" constant="20" symbolic="YES" id="uOL-9d-Jk1"/>
+                            <constraint firstItem="qkR-mr-Lss" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="zNv-WY-svP"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="8Am-CB-HDp"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="choosePhotoButton" destination="C3N-fC-oo8" id="4ys-3B-SW0"/>
+                        <outlet property="imageView" destination="qkR-mr-Lss" id="uGz-rv-fDy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="477" y="379"/>
         </scene>
     </scenes>
 </document>
