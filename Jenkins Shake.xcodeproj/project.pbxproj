@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		92027EE41A50C3B100DA73C9 /* Jenkins2.png in Resources */ = {isa = PBXBuildFile; fileRef = 92027EE31A50C3B100DA73C9 /* Jenkins2.png */; };
 		9204F2981A420411002DDC3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9204F2971A420411002DDC3E /* AppDelegate.swift */; };
 		9204F29A1A420411002DDC3E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9204F2991A420411002DDC3E /* ViewController.swift */; };
 		9204F29D1A420411002DDC3E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9204F29B1A420411002DDC3E /* Main.storyboard */; };
@@ -15,7 +16,6 @@
 		9204F2AE1A420411002DDC3E /* Jenkins_ShakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9204F2AD1A420411002DDC3E /* Jenkins_ShakeTests.swift */; };
 		9204F2C11A429268002DDC3E /* jenkins.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9204F2C01A429268002DDC3E /* jenkins.wav */; };
 		92D507331A43C56200016232 /* Jenkins1.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D507271A43C56200016232 /* Jenkins1.png */; };
-		92D507341A43C56200016232 /* Jenkins2.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D507281A43C56200016232 /* Jenkins2.png */; };
 		92D507351A43C56200016232 /* Jenkins3.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D507291A43C56200016232 /* Jenkins3.png */; };
 		92D507361A43C56200016232 /* Jenkins4.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D5072A1A43C56200016232 /* Jenkins4.png */; };
 		92D507371A43C56200016232 /* Jenkins5.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D5072B1A43C56200016232 /* Jenkins5.png */; };
@@ -39,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		92027EE31A50C3B100DA73C9 /* Jenkins2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Jenkins2.png; path = ../Jenkins2.png; sourceTree = "<group>"; };
 		9204F2921A420411002DDC3E /* Jenkins Shake.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Jenkins Shake.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9204F2961A420411002DDC3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9204F2971A420411002DDC3E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -51,7 +52,6 @@
 		9204F2AD1A420411002DDC3E /* Jenkins_ShakeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jenkins_ShakeTests.swift; sourceTree = "<group>"; };
 		9204F2C01A429268002DDC3E /* jenkins.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = jenkins.wav; sourceTree = "<group>"; };
 		92D507271A43C56200016232 /* Jenkins1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Jenkins1.png; sourceTree = "<group>"; };
-		92D507281A43C56200016232 /* Jenkins2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Jenkins2.png; sourceTree = "<group>"; };
 		92D507291A43C56200016232 /* Jenkins3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Jenkins3.png; sourceTree = "<group>"; };
 		92D5072A1A43C56200016232 /* Jenkins4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Jenkins4.png; sourceTree = "<group>"; };
 		92D5072B1A43C56200016232 /* Jenkins5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Jenkins5.png; sourceTree = "<group>"; };
@@ -144,7 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				92D507271A43C56200016232 /* Jenkins1.png */,
-				92D507281A43C56200016232 /* Jenkins2.png */,
+				92027EE31A50C3B100DA73C9 /* Jenkins2.png */,
 				92D507291A43C56200016232 /* Jenkins3.png */,
 				92D5072A1A43C56200016232 /* Jenkins4.png */,
 				92D5072B1A43C56200016232 /* Jenkins5.png */,
@@ -244,11 +244,11 @@
 				92D507391A43C56200016232 /* Jenkins7.png in Resources */,
 				92D507331A43C56200016232 /* Jenkins1.png in Resources */,
 				92D5073A1A43C56200016232 /* Jenkins8.png in Resources */,
+				92027EE41A50C3B100DA73C9 /* Jenkins2.png in Resources */,
 				9204F2C11A429268002DDC3E /* jenkins.wav in Resources */,
 				92D5073D1A43C56200016232 /* Jenkins11.png in Resources */,
 				92D507371A43C56200016232 /* Jenkins5.png in Resources */,
 				9204F29D1A420411002DDC3E /* Main.storyboard in Resources */,
-				92D507341A43C56200016232 /* Jenkins2.png in Resources */,
 				92D507351A43C56200016232 /* Jenkins3.png in Resources */,
 				92D507381A43C56200016232 /* Jenkins6.png in Resources */,
 				9204F2A21A420411002DDC3E /* LaunchScreen.xib in Resources */,

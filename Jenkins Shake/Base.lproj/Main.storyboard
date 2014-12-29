@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C81h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C81h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fpQ-f3-ztP">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="4Zd-Xs-cP9">
+            <objects>
+                <navigationController id="fpQ-f3-ztP" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hRm-Uq-iem">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="Guy-2R-a0r"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7cn-YS-YkA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-200" y="-525"/>
+        </scene>
+        <!--Jenkins Shake-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="Jenkins_Shake" customModuleProvider="target" sceneMemberID="viewController">
@@ -19,13 +34,13 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kbf-1R-UAs" userLabel="squareView">
-                                <rect key="frame" x="0.0" y="20" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1t2-KI-MUa" userLabel="userImageView">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rf8-9u-U3q" userLabel="jenkinsImageView">
-                                        <rect key="frame" x="229" y="246" width="142" height="109"/>
+                                        <rect key="frame" x="265" y="269" width="70" height="63"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -44,33 +59,21 @@
                                     <outletCollection property="gestureRecognizers" destination="UKC-uk-1bv" appends="YES" id="kot-3M-LIE"/>
                                 </connections>
                             </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8qU-0r-9e6">
+                                <rect key="frame" x="0.0" y="550" width="600" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Wr1-IV-UsS"/>
+                                </constraints>
+                            </scrollView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JENKINS!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Q5-V9-mkA">
-                                <rect key="frame" x="214" y="620" width="172.5" height="48"/>
+                                <rect key="frame" x="214" y="664" width="172.5" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C3N-fC-oo8">
-                                <rect key="frame" x="16" y="550" width="98" height="30"/>
-                                <state key="normal" title="Choose Photo">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="didPressChoosePhotoButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="JUD-Ux-Ksu"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cO1-2F-gq3">
-                                <rect key="frame" x="550" y="550" width="34" height="30"/>
-                                <state key="normal" title="Save">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="didPressSaveButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="7DB-ec-yqV"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose a photo using the button below." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o89-KQ-D6M">
-                                <rect key="frame" x="0.0" y="287" width="600" height="26.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose a photo using the button above" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="55Z-RX-rMi">
+                                <rect key="frame" x="0.0" y="285" width="600" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -78,34 +81,37 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="kbf-1R-UAs" firstAttribute="bottom" secondItem="4Q5-V9-mkA" secondAttribute="top" id="1Jv-ab-9Di"/>
+                            <constraint firstAttribute="centerY" secondItem="55Z-RX-rMi" secondAttribute="centerY" constant="0.5" id="3Vq-hS-9Us"/>
                             <constraint firstAttribute="centerX" secondItem="kbf-1R-UAs" secondAttribute="centerX" id="Api-MK-t3a"/>
-                            <constraint firstItem="o89-KQ-D6M" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="D7i-T5-vHE"/>
+                            <constraint firstItem="4Q5-V9-mkA" firstAttribute="top" secondItem="2fi-mo-0CV" secondAttribute="bottom" constant="64" id="Dld-Ag-9qN"/>
                             <constraint firstItem="kbf-1R-UAs" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="EqV-zE-0Wb"/>
-                            <constraint firstAttribute="centerY" secondItem="o89-KQ-D6M" secondAttribute="centerY" id="FwN-dk-aZa"/>
-                            <constraint firstItem="o89-KQ-D6M" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="Jil-QK-F3A"/>
-                            <constraint firstItem="C3N-fC-oo8" firstAttribute="baseline" secondItem="cO1-2F-gq3" secondAttribute="baseline" id="UYS-a0-E0I"/>
-                            <constraint firstItem="o89-KQ-D6M" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" constant="-214" id="Z9V-9J-Lqw"/>
-                            <constraint firstItem="cO1-2F-gq3" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="b0k-RG-laV"/>
-                            <constraint firstItem="kbf-1R-UAs" firstAttribute="width" secondItem="o89-KQ-D6M" secondAttribute="width" id="dLY-Ju-OTM"/>
-                            <constraint firstItem="C3N-fC-oo8" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="eFj-pi-1gV"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="8qU-0r-9e6" secondAttribute="bottom" id="GMX-A7-CXw"/>
+                            <constraint firstAttribute="centerX" secondItem="55Z-RX-rMi" secondAttribute="centerX" id="ICQ-4J-bQI"/>
+                            <constraint firstAttribute="centerX" secondItem="8qU-0r-9e6" secondAttribute="centerX" id="M4Q-yz-Kx4"/>
+                            <constraint firstItem="8qU-0r-9e6" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="RCh-VL-209"/>
+                            <constraint firstItem="55Z-RX-rMi" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="dzc-oY-Suk"/>
                             <constraint firstAttribute="centerX" secondItem="4Q5-V9-mkA" secondAttribute="centerX" id="pkT-6v-Xtf"/>
                             <constraint firstItem="kbf-1R-UAs" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="sTM-oD-5Eg"/>
-                            <constraint firstAttribute="bottom" secondItem="C3N-fC-oo8" secondAttribute="bottom" constant="20" symbolic="YES" id="uOL-9d-Jk1"/>
-                            <constraint firstAttribute="centerX" secondItem="o89-KQ-D6M" secondAttribute="centerX" id="wTh-83-BR1"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="dLY-Ju-OTM"/>
-                                <exclude reference="D7i-T5-vHE"/>
-                                <exclude reference="Z9V-9J-Lqw"/>
-                            </mask>
-                        </variation>
                     </view>
+                    <navigationItem key="navigationItem" title="Jenkins Shake" id="yet-qU-zIF">
+                        <barButtonItem key="leftBarButtonItem" systemItem="camera" id="5Fi-wM-Un7">
+                            <connections>
+                                <action selector="didPressChoosePhotoButton:" destination="vXZ-lx-hvc" id="nQJ-Up-xoN"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="action" id="o9Z-cr-Ime">
+                            <connections>
+                                <action selector="didPressSaveButton:" destination="vXZ-lx-hvc" id="BPC-5l-dId"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
-                        <outlet property="callToActionLabel" destination="o89-KQ-D6M" id="Fnv-Ok-Lra"/>
-                        <outlet property="choosePhotoButton" destination="C3N-fC-oo8" id="4ys-3B-SW0"/>
+                        <outlet property="callToActionLabel" destination="55Z-RX-rMi" id="0pj-Wo-BXR"/>
+                        <outlet property="choosePhotoButton" destination="5Fi-wM-Un7" id="qiN-1v-aQe"/>
                         <outlet property="jenkinsImageView" destination="rf8-9u-U3q" id="qeb-uV-ggt"/>
                         <outlet property="jenkinsLabel" destination="4Q5-V9-mkA" id="qUV-cl-W0d"/>
+                        <outlet property="shareButton" destination="o9Z-cr-Ime" id="wa2-8A-66A"/>
                         <outlet property="squareView" destination="kbf-1R-UAs" id="goU-w6-Wtb"/>
                         <outlet property="userImageView" destination="1t2-KI-MUa" id="9hV-R1-4Bi"/>
                     </connections>
@@ -130,7 +136,7 @@
                     </connections>
                 </rotationGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="477" y="379"/>
+            <point key="canvasLocation" x="537" y="-525"/>
         </scene>
     </scenes>
 </document>

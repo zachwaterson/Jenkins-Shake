@@ -11,7 +11,8 @@ import AVFoundation
 
 class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControllerDelegate, UIPopoverControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate {
     //outlets
-    @IBOutlet weak var choosePhotoButton: UIButton!
+    @IBOutlet weak var choosePhotoButton: UIBarButtonItem!
+    @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var squareView: UIView!
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var jenkinsImageView: UIImageView!
@@ -19,12 +20,13 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
     @IBOutlet weak var jenkinsLabel: UILabel!
     
     //properties
-    var picker:UIImagePickerController?=UIImagePickerController()
-    var popover:UIPopoverController? = nil
+    var picker:UIImagePickerController! = UIImagePickerController()
     var lastScale = CGFloat(1.0)
     var lastRotation = CGFloat(0.0)
     var firstX = CGFloat(0.0)
     var firstY = CGFloat(0.0)
+    var lastJenkinsNumber = 0
+    var randomJenkins = false
     var pastJenkinsNumbers = [-1, -2, -3]
     var jenkinsSound:SystemSoundID = 0
     
@@ -75,15 +77,17 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
     }
     
     //buttons
-    @IBAction func didPressSaveButton(sender: UIButton) {
+    //share not save button
+    @IBAction func didPressSaveButton(sender: UIBarButtonItem) {
         UIGraphicsBeginImageContext(squareView.frame.size)
         squareView.layer.renderInContext(UIGraphicsGetCurrentContext())
         let finalImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIImageWriteToSavedPhotosAlbum(finalImage, self, "image:didFinishSavingWithError:contextInfo:", nil)
+        let shareVC = UIActivityViewController(activityItems: [finalImage], applicationActivities: nil)
+        self.presentViewController(shareVC, animated: true, completion: nil)
         
     }
     
-    @IBAction func didPressChoosePhotoButton(sender: AnyObject) {
+    @IBAction func didPressChoosePhotoButton(sender: UIBarButtonItem) {
         let alert:UIAlertController=UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         let cameraAction = UIAlertAction(title: "Take Photo", style: UIAlertActionStyle.Default) {
@@ -107,40 +111,39 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
         if (UIDevice.currentDevice().userInterfaceIdiom == .Phone) {
             self.presentViewController(alert, animated: true, completion: nil)
         } else {
-            popover = UIPopoverController(contentViewController: alert)
-            popover!.presentPopoverFromRect(choosePhotoButton.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
-        
+           var choosePhotoPopover = UIPopoverController(contentViewController: alert)
+           choosePhotoPopover.presentPopoverFromBarButtonItem(choosePhotoButton, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
         }
     }
     
     //save feedback
-    func image(image: UIImage, didFinishSavingWithError error:NSErrorPointer, contextInfo: UnsafePointer<()>) {
-        let alert=UIAlertController(title: "Image Saved", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-        let cancelAction = UIAlertAction(title: "Great!", style: UIAlertActionStyle.Cancel) { (UIAlertAction) -> Void in
-            //nothing
-        }
-        alert.addAction(cancelAction)
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
+//    func image(image: UIImage, didFinishSavingWithError error:NSErrorPointer, contextInfo: UnsafePointer<()>) {
+//        let alert=UIAlertController(title: "Image Saved", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+//        let cancelAction = UIAlertAction(title: "Great!", style: UIAlertActionStyle.Cancel) { (UIAlertAction) -> Void in
+//            //nothing
+//        }
+//        alert.addAction(cancelAction)
+//        self.presentViewController(alert, animated: true, completion: nil)
+//    }
     
     func openCamera() {
         if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
-            picker!.sourceType = UIImagePickerControllerSourceType.Camera
-            picker!.allowsEditing = true
-            self.presentViewController(picker!, animated: true, completion: nil)
+            picker.sourceType = UIImagePickerControllerSourceType.Camera
+            picker.allowsEditing = true
+            self.presentViewController(picker, animated: true, completion: nil)
         } else {
             self.openLibrary()
         }
     }
     
     func openLibrary() {
-        picker!.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        picker!.allowsEditing = true
+        picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        picker.allowsEditing = true
         if (UIDevice.currentDevice().userInterfaceIdiom == .Phone) {
-            self.presentViewController(picker!, animated: true, completion: nil)
+            self.presentViewController(picker, animated: true, completion: nil)
         } else {
-            popover = UIPopoverController(contentViewController: picker!)
-            popover!.presentPopoverFromRect(choosePhotoButton.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+            var choosePhotoPopover = UIPopoverController(contentViewController: picker)
+           choosePhotoPopover.presentPopoverFromBarButtonItem(choosePhotoButton, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
 
         }
     }
@@ -170,15 +173,26 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
     func changeJenkinsImage() {
         //make sure to not get the same jenkins photo
         let numberOfJenkinsPhotos = 12
-        var newJenkinsNumber:Int = Int(rand())%numberOfJenkinsPhotos + 1
-        while ((contains(pastJenkinsNumbers, newJenkinsNumber))) {
+        var newJenkinsNumber = -1
+        if randomJenkins {
+            //generate randomly
             newJenkinsNumber = Int(rand())%numberOfJenkinsPhotos + 1
+            while ((contains(pastJenkinsNumbers, newJenkinsNumber))) {
+                newJenkinsNumber = Int(rand())%numberOfJenkinsPhotos + 1
+                //add to back of array and remove first element
+                pastJenkinsNumbers.append(newJenkinsNumber)
+                pastJenkinsNumbers.removeAtIndex(0)
+            }
+        } else {
+            //proceed in order
+            newJenkinsNumber = lastJenkinsNumber + 1 > numberOfJenkinsPhotos ? 1 : lastJenkinsNumber + 1
+            lastJenkinsNumber = newJenkinsNumber
         }
-        let image = UIImage(named: "Jenkins" + String(newJenkinsNumber) + ".png")
-        //add to back of array and remove first element
-        pastJenkinsNumbers.append(newJenkinsNumber)
-        pastJenkinsNumbers.removeAtIndex(0)
-        jenkinsImageView.image = image!
+        if let image = UIImage(named: "Jenkins" + String(newJenkinsNumber) + ".png") {
+            jenkinsImageView.image = image
+            jenkinsImageView.hidden = false
+        }
+        
         //clear old transforms
         jenkinsImageView.transform = CGAffineTransformIdentity
         jenkinsImageView.sizeToFit()
@@ -191,6 +205,8 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
             }, completion: nil)
         //jenkins noise
         AudioServicesPlayAlertSound(jenkinsSound)
+        
+        shareButton.enabled = true
         
         }
     
@@ -213,8 +229,7 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
         callToActionLabel.adjustsFontSizeToFitWidth = true
         jenkinsLabel.alpha = 0.0
         getJenkinsSound()
-        picker!.delegate = self
-
+        picker.delegate = self
         
     }
 
