@@ -53,16 +53,21 @@
                                     <constraint firstAttribute="width" secondItem="kbf-1R-UAs" secondAttribute="height" multiplier="1:1" id="i5A-7b-4g6"/>
                                     <constraint firstAttribute="height" secondItem="1t2-KI-MUa" secondAttribute="height" id="nTX-1J-Rv6"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Hvo-B8-fNc"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="RFx-Lm-Pyb" appends="YES" id="NOh-ju-31p"/>
                                     <outletCollection property="gestureRecognizers" destination="Cb6-8q-kue" appends="YES" id="Tmo-lR-hqx"/>
                                     <outletCollection property="gestureRecognizers" destination="UKC-uk-1bv" appends="YES" id="kot-3M-LIE"/>
                                 </connections>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8qU-0r-9e6">
-                                <rect key="frame" x="0.0" y="550" width="600" height="50"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8qU-0r-9e6" userLabel="Options Scroll View">
+                                <rect key="frame" x="0.0" y="510" width="600" height="90"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="Wr1-IV-UsS"/>
+                                    <constraint firstAttribute="height" constant="90" id="Wr1-IV-UsS"/>
                                 </constraints>
                             </scrollView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JENKINS!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Q5-V9-mkA">
@@ -93,6 +98,11 @@
                             <constraint firstAttribute="centerX" secondItem="4Q5-V9-mkA" secondAttribute="centerX" id="pkT-6v-Xtf"/>
                             <constraint firstItem="kbf-1R-UAs" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="sTM-oD-5Eg"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Dld-Ag-9qN"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Jenkins Shake" id="yet-qU-zIF">
                         <barButtonItem key="leftBarButtonItem" systemItem="camera" id="5Fi-wM-Un7">
@@ -111,6 +121,7 @@
                         <outlet property="choosePhotoButton" destination="5Fi-wM-Un7" id="qiN-1v-aQe"/>
                         <outlet property="jenkinsImageView" destination="rf8-9u-U3q" id="qeb-uV-ggt"/>
                         <outlet property="jenkinsLabel" destination="4Q5-V9-mkA" id="qUV-cl-W0d"/>
+                        <outlet property="optionsScrollView" destination="8qU-0r-9e6" id="TfH-TP-rHQ"/>
                         <outlet property="shareButton" destination="o9Z-cr-Ime" id="wa2-8A-66A"/>
                         <outlet property="squareView" destination="kbf-1R-UAs" id="goU-w6-Wtb"/>
                         <outlet property="userImageView" destination="1t2-KI-MUa" id="9hV-R1-4Bi"/>
