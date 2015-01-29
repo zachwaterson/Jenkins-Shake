@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 
+
 class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControllerDelegate, UIPopoverControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate {
     //outlets
     @IBOutlet weak var choosePhotoButton: UIBarButtonItem!
@@ -19,6 +20,8 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
     @IBOutlet weak var callToActionLabel: UILabel!
     @IBOutlet weak var jenkinsLabel: UILabel!
     @IBOutlet weak var optionsScrollView: UIScrollView!
+    @IBOutlet weak var opacitySliderView: UIView!
+    @IBOutlet weak var opacitySlider: UISlider!
     
     //properties
     var picker:UIImagePickerController! = UIImagePickerController()
@@ -30,7 +33,8 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
     var randomJenkins = false
     var pastJenkinsNumbers = [-1, -2, -3]
     var jenkinsSound:SystemSoundID = 0
-    
+    var isFlipped = false
+    var originalUserImage:UIImage? = nil
     
     //gesture stuff
     @IBAction func handlePan(sender: UIPanGestureRecognizer) {
@@ -67,8 +71,10 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
             return
         }
         
-        let rotation = 0.0 - (lastRotation - sender.rotation)
-        
+        var rotation = 0.0 - (lastRotation - sender.rotation)
+        if (isFlipped) {
+            rotation = rotation*(-1)
+        }
         let currentTransform = jenkinsImageView.transform
         let newTransform = CGAffineTransformRotate(currentTransform, rotation)
         jenkinsImageView.transform = newTransform
@@ -149,6 +155,9 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
     //after picking image
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         userImageView.image = (info[UIImagePickerControllerEditedImage] as UIImage)
+        //save original for reloading if need be
+        originalUserImage = userImageView.image?.copy() as? UIImage
+        
         picker.dismissViewControllerAnimated(true, completion: nil)
         callToActionLabel.hidden = true
         changeJenkinsImage()
@@ -222,20 +231,86 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
     }
     
     //options
-    
     func resetJenkins(sender:UIButton!) {
-        jenkinsImageView.transform = CGAffineTransformIdentity
-        jenkinsImageView.sizeToFit()
-        jenkinsImageView.frame = CGRect(x: squareView.frame.width/4, y: squareView.frame.height/4, width: squareView.frame.width/2, height: squareView.frame.height/2)
+        opacitySlider.value = 1.0
+        isFlipped = false
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.jenkinsImageView.transform = CGAffineTransformIdentity
+            self.jenkinsImageView.sizeToFit()
+            self.jenkinsImageView.frame = CGRect(x: self.squareView.frame.width/4, y: self.squareView.frame.height/4, width: self.squareView.frame.width/2, height: self.squareView.frame.height/2)
+            self.jenkinsImageView.alpha = 1.0
+        })
+
     }
+    func resetEverything() {
+        let alert:UIAlertController=UIAlertController(title: "Do you want to reset the entire image?", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let resetEverythingAction = UIAlertAction(title: "Reset All", style: UIAlertActionStyle.Destructive) {
+            UIAlertAction in
+            self.actuallyResetEverything()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (UIAlertAction) -> Void in
+            //nothing
+        }
+        
+        alert.addAction(resetEverythingAction)
+        alert.addAction(cancelAction)
+        
+        //phone only
+        if (UIDevice.currentDevice().userInterfaceIdiom == .Phone) {
+            self.presentViewController(alert, animated: true, completion: nil)
+        } else {
+            var choosePhotoPopover = UIPopoverController(contentViewController: alert)
+            choosePhotoPopover.presentPopoverFromBarButtonItem(choosePhotoButton, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+        }
+    }
+    func actuallyResetEverything() {
+        //fade out current jenkins
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.jenkinsImageView.alpha = 0
+        })
+        //fade into old image
+        let animationDuration:NSTimeInterval = 0.5
+        UIView.transitionWithView(self.userImageView, duration: animationDuration, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
+            self.userImageView.image = self.originalUserImage
+        }, { (Bool) -> Void in
+            //bring back jenkins
+            self.resetJenkins(nil)
+            let animationDuration:NSTimeInterval = 0.5
+            UIView.animateWithDuration(animationDuration, animations: { () -> Void in
+                self.jenkinsImageView.alpha = 1
+            })
+        })
+    }
+    
     func mirrorJenkins(sender:UIButton!) {
-        jenkinsImageView.transform = CGAffineTransformScale(jenkinsImageView.transform, -1, 1)
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.jenkinsImageView.transform = CGAffineTransformScale(self.jenkinsImageView.transform, -1, 1)
+        })
+        isFlipped = !isFlipped
     }
     func MOARJenkins(sender:UIButton!) {
         userImageView.image = getOnscreenImage()
         changeJenkinsImage()
     }
-
+    func showOpaqueSlider(sender:UIButton!) {
+        opacitySliderView.hidden = false
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.opacitySliderView.alpha = 1.0
+        })
+        
+    }
+    @IBAction func opacityDoneButtonPressed(sender: UIButton) {
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.opacitySliderView.alpha = 0.0
+            })
+    }
+    @IBAction func opacitySliderMoved(sender: UISlider) {
+        jenkinsImageView.alpha = CGFloat(sender.value)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -246,45 +321,61 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
         getJenkinsSound()
         picker.delegate = self
         optionsScrollView.hidden = true
+        optionsScrollView.alpha = 1.0
+        opacitySliderView.hidden = true
+        opacitySliderView.alpha = 0.0
         
         //create buttons within scroll view
         var x:CGFloat = 0
         var frame = CGRect()
-        let numberOfOptions:CGFloat = 3
+        let numberOfOptions:CGFloat = 4
         let buttonSpacing:CGFloat = 10
-        let buttonMargin:CGFloat = 20
-        let buttonDimension:CGFloat = optionsScrollView.frame.size.height - buttonMargin
+        let buttonMargin:CGFloat = 25
+        let buttonDimension:CGFloat = optionsScrollView.frame.size.height - 10 - buttonMargin
         let buttonCornerRadius:CGFloat = 15
         
-        for (var i:CGFloat = 0; i < numberOfOptions; i++) {
+        let buttonArray = [OptionsButton(title: "Reset", pressAction: "resetJenkins:", longPressAction: "resetEverything", placementIndex: 0, iconName: "reset.png"), OptionsButton(title: "Mirror", pressAction: "mirrorJenkins:", longPressAction: nil, placementIndex: 1, iconName: "mirror.png"), OptionsButton(title: "MOAR", pressAction: "MOARJenkins:", longPressAction: nil, placementIndex: 2, iconName: "MOAR.png"), OptionsButton(title: "Opacity", pressAction: "showOpaqueSlider:", longPressAction: nil, placementIndex: 3, iconName: "opacity.png")]
+        
+        for buttonStruct in buttonArray {
             var button = UIButton()
             button.layer.cornerRadius = buttonCornerRadius
             
             //place frame
-            if (i == 0) {
+            if (buttonStruct.placementIndex == 0) {
                 //first button has constant location
-                frame = CGRect(x: buttonSpacing, y: buttonSpacing, width: buttonDimension, height: buttonDimension)
+                button.frame = CGRect(x: buttonSpacing, y: buttonSpacing, width: buttonDimension, height: buttonDimension)
             } else {
-                frame = CGRect(x: (i*buttonDimension + i*buttonMargin + buttonSpacing), y: buttonSpacing, width: buttonDimension, height: buttonDimension)
+                button.frame = CGRect(x: (buttonStruct.placementIndex * (buttonDimension +  buttonMargin) + buttonSpacing), y: buttonSpacing, width: buttonDimension, height: buttonDimension)
             }
             
-            //update for each button
-            button.frame = frame
+            if let buttonPressAction = buttonStruct.pressAction {
+                button.addTarget(self, action: buttonPressAction, forControlEvents: UIControlEvents.TouchUpInside)
+            }
             
-            let titles = ["Reset", "Mirror", "MOAR"]
-            let actions:[Selector] = [Selector("resetJenkins:"), "mirrorJenkins:", "MOARJenkins:"]
-            button.addTarget(self, action: actions[Int(i)], forControlEvents: UIControlEvents.TouchUpInside)
-            button.setTitle(titles[Int(i)], forState: UIControlState.Normal)
-            button.backgroundColor = UIColor.blueColor()
-
+            if let longPressAction = buttonStruct.longPressAction {
+                let longPressRecognizer = UILongPressGestureRecognizer()
+                longPressRecognizer.addTarget(self, action: longPressAction)
+                button.addGestureRecognizer(longPressRecognizer)
+            }
+            
+            var label = UILabel()
+            label.frame = button.frame
+            label.frame.origin.y = label.frame.origin.y + buttonDimension
+            label.text = buttonStruct.title
+            label.sizeToFit()
+            label.frame.size.width = button.frame.size.width
+            label.textAlignment = NSTextAlignment.Center
+            button.setImage(UIImage(named: buttonStruct.iconName), forState: UIControlState.Normal)
+            button.backgroundColor = UIColor(red: 0.91, green: 0.91, blue: 0.91, alpha: 1)
             optionsScrollView.addSubview(button)
-
+            optionsScrollView.addSubview(label)
+            
             //set width to last button
-            if (i == numberOfOptions - 1) {
+            if (buttonStruct.placementIndex == numberOfOptions - 1) {
                 x = CGRectGetMaxX(button.frame)
             }
+
         }
-        
         optionsScrollView.contentSize = CGSize(width: x + buttonSpacing, height: optionsScrollView.frame.size.height)
         
     }
@@ -296,4 +387,14 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
 
 
 }
+
+//button struct
+struct OptionsButton {
+    var title = ""
+    var pressAction:Selector? = nil
+    var longPressAction:Selector? = nil
+    var placementIndex:CGFloat = -1
+    var iconName = ""
+}
+
 

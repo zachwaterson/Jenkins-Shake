@@ -26,6 +26,10 @@
 		92D5073C1A43C56200016232 /* Jenkins10.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D507301A43C56200016232 /* Jenkins10.png */; };
 		92D5073D1A43C56200016232 /* Jenkins11.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D507311A43C56200016232 /* Jenkins11.png */; };
 		92D5073E1A43C56200016232 /* Jenkins12.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D507321A43C56200016232 /* Jenkins12.png */; };
+		92FA99791A79D70200895FA9 /* mirror.png in Resources */ = {isa = PBXBuildFile; fileRef = 92FA99781A79D70200895FA9 /* mirror.png */; };
+		92FA997B1A79D96E00895FA9 /* reset.png in Resources */ = {isa = PBXBuildFile; fileRef = 92FA997A1A79D96E00895FA9 /* reset.png */; };
+		92FA997F1A79DBC200895FA9 /* MOAR.png in Resources */ = {isa = PBXBuildFile; fileRef = 92FA997C1A79DBC200895FA9 /* MOAR.png */; };
+		92FA99801A79DBC200895FA9 /* opacity.png in Resources */ = {isa = PBXBuildFile; fileRef = 92FA997D1A79DBC200895FA9 /* opacity.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +66,10 @@
 		92D507301A43C56200016232 /* Jenkins10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Jenkins10.png; sourceTree = "<group>"; };
 		92D507311A43C56200016232 /* Jenkins11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Jenkins11.png; sourceTree = "<group>"; };
 		92D507321A43C56200016232 /* Jenkins12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Jenkins12.png; sourceTree = "<group>"; };
+		92FA99781A79D70200895FA9 /* mirror.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mirror.png; sourceTree = "<group>"; };
+		92FA997A1A79D96E00895FA9 /* reset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reset.png; sourceTree = "<group>"; };
+		92FA997C1A79DBC200895FA9 /* MOAR.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MOAR.png; sourceTree = "<group>"; };
+		92FA997D1A79DBC200895FA9 /* opacity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = opacity.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +163,10 @@
 				92D507301A43C56200016232 /* Jenkins10.png */,
 				92D507311A43C56200016232 /* Jenkins11.png */,
 				92D507321A43C56200016232 /* Jenkins12.png */,
+				92FA99781A79D70200895FA9 /* mirror.png */,
+				92FA997A1A79D96E00895FA9 /* reset.png */,
+				92FA997C1A79DBC200895FA9 /* MOAR.png */,
+				92FA997D1A79DBC200895FA9 /* opacity.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -242,6 +254,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				92D507391A43C56200016232 /* Jenkins7.png in Resources */,
+				92FA997B1A79D96E00895FA9 /* reset.png in Resources */,
 				92D507331A43C56200016232 /* Jenkins1.png in Resources */,
 				92D5073A1A43C56200016232 /* Jenkins8.png in Resources */,
 				92027EE41A50C3B100DA73C9 /* Jenkins2.png in Resources */,
@@ -250,10 +263,13 @@
 				92D507371A43C56200016232 /* Jenkins5.png in Resources */,
 				9204F29D1A420411002DDC3E /* Main.storyboard in Resources */,
 				92D507351A43C56200016232 /* Jenkins3.png in Resources */,
+				92FA997F1A79DBC200895FA9 /* MOAR.png in Resources */,
+				92FA99801A79DBC200895FA9 /* opacity.png in Resources */,
 				92D507381A43C56200016232 /* Jenkins6.png in Resources */,
 				9204F2A21A420411002DDC3E /* LaunchScreen.xib in Resources */,
 				92D5073B1A43C56200016232 /* Jenkins9.png in Resources */,
 				92D507361A43C56200016232 /* Jenkins4.png in Resources */,
+				92FA99791A79D70200895FA9 /* mirror.png in Resources */,
 				9204F29F1A420411002DDC3E /* Images.xcassets in Resources */,
 				92D5073E1A43C56200016232 /* Jenkins12.png in Resources */,
 				92D5073C1A43C56200016232 /* Jenkins10.png in Resources */,

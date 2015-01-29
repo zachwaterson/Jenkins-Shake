@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C81h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fpQ-f3-ztP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fpQ-f3-ztP">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -39,9 +40,7 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1t2-KI-MUa" userLabel="userImageView">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rf8-9u-U3q" userLabel="jenkinsImageView">
-                                        <rect key="frame" x="265" y="269" width="70" height="63"/>
-                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rf8-9u-U3q" userLabel="jenkinsImageView"/>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
@@ -65,13 +64,71 @@
                                 </connections>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8qU-0r-9e6" userLabel="Options Scroll View">
-                                <rect key="frame" x="0.0" y="510" width="600" height="90"/>
+                                <rect key="frame" x="0.0" y="500" width="600" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="90" id="Wr1-IV-UsS"/>
+                                    <constraint firstAttribute="height" constant="100" id="Wr1-IV-UsS"/>
                                 </constraints>
                             </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tYv-pO-VOv" userLabel="OpacitySliderView">
+                                <rect key="frame" x="0.0" y="500" width="600" height="100"/>
+                                <subviews>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Fol-Rx-RCb">
+                                        <rect key="frame" x="6" y="8" width="588" height="31"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="CZl-7i-ANY"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="gI4-Re-Ig7"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="gI4-Re-Ig7"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <action selector="opacitySliderMoved:" destination="vXZ-lx-hvc" eventType="valueChanged" id="SKl-BH-EHa"/>
+                                        </connections>
+                                    </slider>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AMg-uW-ovc">
+                                        <rect key="frame" x="282" y="62" width="37" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="37" id="XWv-9Q-Ypu"/>
+                                            <constraint firstAttribute="height" constant="30" id="cLG-rr-gJB"/>
+                                            <constraint firstAttribute="height" constant="30" id="vJM-ku-Wnk"/>
+                                        </constraints>
+                                        <state key="normal" title="Done">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="cLG-rr-gJB"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <action selector="opacityDoneButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Iff-jS-LBD"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="Fol-Rx-RCb" firstAttribute="leading" secondItem="tYv-pO-VOv" secondAttribute="leading" constant="8" id="1qd-Zr-P6a"/>
+                                    <constraint firstAttribute="trailing" secondItem="Fol-Rx-RCb" secondAttribute="trailing" constant="8" id="BaM-m8-mEP"/>
+                                    <constraint firstAttribute="centerX" secondItem="AMg-uW-ovc" secondAttribute="centerX" id="D4r-8D-AH0"/>
+                                    <constraint firstItem="AMg-uW-ovc" firstAttribute="top" secondItem="Fol-Rx-RCb" secondAttribute="bottom" constant="13" id="GDV-6c-OmP"/>
+                                    <constraint firstAttribute="height" constant="89" id="L0w-AU-SWw"/>
+                                    <constraint firstAttribute="centerX" secondItem="Fol-Rx-RCb" secondAttribute="centerX" id="Mid-sU-iiy"/>
+                                    <constraint firstItem="Fol-Rx-RCb" firstAttribute="top" secondItem="tYv-pO-VOv" secondAttribute="top" constant="8" id="eB4-Oa-lR7"/>
+                                    <constraint firstAttribute="bottom" secondItem="AMg-uW-ovc" secondAttribute="bottom" constant="8" id="h01-o5-SxO"/>
+                                    <constraint firstAttribute="centerX" secondItem="AMg-uW-ovc" secondAttribute="centerX" constant="-0.5" id="yfC-db-je2"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="L0w-AU-SWw"/>
+                                        <exclude reference="GDV-6c-OmP"/>
+                                        <exclude reference="yfC-db-je2"/>
+                                    </mask>
+                                </variation>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JENKINS!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Q5-V9-mkA">
-                                <rect key="frame" x="214" y="664" width="172.5" height="48"/>
+                                <rect key="frame" x="214" y="664" width="173" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -92,14 +149,24 @@
                             <constraint firstItem="kbf-1R-UAs" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="EqV-zE-0Wb"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="8qU-0r-9e6" secondAttribute="bottom" id="GMX-A7-CXw"/>
                             <constraint firstAttribute="centerX" secondItem="55Z-RX-rMi" secondAttribute="centerX" id="ICQ-4J-bQI"/>
+                            <constraint firstItem="tYv-pO-VOv" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" constant="16" id="KS6-6u-Ls7"/>
+                            <constraint firstItem="tYv-pO-VOv" firstAttribute="height" secondItem="kh9-bI-dsS" secondAttribute="height" id="M1h-9y-y7R"/>
                             <constraint firstAttribute="centerX" secondItem="8qU-0r-9e6" secondAttribute="centerX" id="M4Q-yz-Kx4"/>
                             <constraint firstItem="8qU-0r-9e6" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="RCh-VL-209"/>
                             <constraint firstItem="55Z-RX-rMi" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="dzc-oY-Suk"/>
+                            <constraint firstItem="tYv-pO-VOv" firstAttribute="height" secondItem="8qU-0r-9e6" secondAttribute="height" id="h4c-2a-haQ"/>
+                            <constraint firstAttribute="centerX" secondItem="tYv-pO-VOv" secondAttribute="centerX" id="hYc-Wd-QW1"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="tYv-pO-VOv" secondAttribute="bottom" id="hyA-0N-53U"/>
                             <constraint firstAttribute="centerX" secondItem="4Q5-V9-mkA" secondAttribute="centerX" id="pkT-6v-Xtf"/>
+                            <constraint firstItem="tYv-pO-VOv" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="rME-8d-E3n"/>
                             <constraint firstItem="kbf-1R-UAs" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="sTM-oD-5Eg"/>
+                            <constraint firstItem="tYv-pO-VOv" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="xCM-2Q-AJi"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="KS6-6u-Ls7"/>
+                                <exclude reference="M1h-9y-y7R"/>
+                                <exclude reference="xCM-2Q-AJi"/>
                                 <exclude reference="Dld-Ag-9qN"/>
                             </mask>
                         </variation>
@@ -121,6 +188,8 @@
                         <outlet property="choosePhotoButton" destination="5Fi-wM-Un7" id="qiN-1v-aQe"/>
                         <outlet property="jenkinsImageView" destination="rf8-9u-U3q" id="qeb-uV-ggt"/>
                         <outlet property="jenkinsLabel" destination="4Q5-V9-mkA" id="qUV-cl-W0d"/>
+                        <outlet property="opacitySlider" destination="Fol-Rx-RCb" id="gZv-ks-J23"/>
+                        <outlet property="opacitySliderView" destination="tYv-pO-VOv" id="7fb-W0-mEF"/>
                         <outlet property="optionsScrollView" destination="8qU-0r-9e6" id="TfH-TP-rHQ"/>
                         <outlet property="shareButton" destination="o9Z-cr-Ime" id="wa2-8A-66A"/>
                         <outlet property="squareView" destination="kbf-1R-UAs" id="goU-w6-Wtb"/>
