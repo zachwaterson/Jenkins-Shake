@@ -9,9 +9,22 @@
 import UIKit
 import AVFoundation
 
+let numberOfJenkinsPhotos = 13
+
+// button struct
+struct OptionsButton {
+    var title = ""
+    var pressAction:Selector? = nil
+    var longPressAction:Selector? = nil
+    var placementIndex:CGFloat = -1
+    var iconName = ""
+}
 
 class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControllerDelegate, UIPopoverControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate {
-    //outlets
+    
+    // MARK: properties
+    
+    // outlets
     @IBOutlet weak var choosePhotoButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var squareView: UIView!
@@ -23,8 +36,8 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
     @IBOutlet weak var opacitySliderView: UIView!
     @IBOutlet weak var opacitySlider: UISlider!
     
-    //properties
-    var picker:UIImagePickerController! = UIImagePickerController()
+    // properties
+    var picker = UIImagePickerController()
     var lastScale = CGFloat(1.0)
     var lastRotation = CGFloat(0.0)
     var firstX = CGFloat(0.0)
@@ -36,7 +49,7 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
     var isFlipped = false
     var originalUserImage:UIImage? = nil
     
-    //gesture stuff
+    // MARK: gesture stuff
     @IBAction func handlePan(sender: UIPanGestureRecognizer) {
         var translatedPoint = sender.translationInView(squareView)
         if(sender.state == UIGestureRecognizerState.Began) {
@@ -45,9 +58,7 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
         }
         
         translatedPoint = CGPointMake(firstX + translatedPoint.x, firstY + translatedPoint.y)
-        
         jenkinsImageView.center = translatedPoint
-        
     }
     
     @IBAction func handlePinch(sender: UIPinchGestureRecognizer) {
@@ -56,11 +67,9 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
         }
         
         let scale = 1.0 - (lastScale - sender.scale)
-        
         let currentTransform = jenkinsImageView.transform
         let newTransform = CGAffineTransformScale(currentTransform, scale, scale)
         jenkinsImageView.transform = newTransform
-        
         lastScale = sender.scale
         
     }
@@ -72,32 +81,45 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
         }
         
         var rotation = 0.0 - (lastRotation - sender.rotation)
-        if (isFlipped) {
-            rotation = rotation*(-1)
-        }
+        rotation = isFlipped ? rotation * -1 : rotation
+        lastRotation = sender.rotation
+
         let currentTransform = jenkinsImageView.transform
         let newTransform = CGAffineTransformRotate(currentTransform, rotation)
         jenkinsImageView.transform = newTransform
-        
-        lastRotation = sender.rotation
-                
     }
     
-    //get and return current image on screen
+    // get and return current image on screen
     func getOnscreenImage() -> UIImage {
         UIGraphicsBeginImageContext(squareView.frame.size)
-        squareView.layer.renderInContext(UIGraphicsGetCurrentContext())
+        squareView.layer.renderInContext(UIGraphicsGetCurrentContext()!)
         let finalImage = UIGraphicsGetImageFromCurrentImageContext()
         return finalImage
     }
     
-    //buttons
-    //share not save button
-    @IBAction func didPressSaveButton(sender: UIBarButtonItem) {
+    // allows multiple gestures at same time
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    // allow for shake
+    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
+        if (motion == UIEventSubtype.MotionShake && (userImageView.image != nil)) {
+            changeJenkinsImage()
+        }
+    }
+    // for motion
+    override func canBecomeFirstResponder() -> Bool {
+        return true
+    }
+    
+    // MARK: button methods
+    @IBAction func didPressShareButton(sender: UIBarButtonItem) {
         let finalImage = getOnscreenImage()
         let shareVC = UIActivityViewController(activityItems: [finalImage], applicationActivities: nil)
-        self.presentViewController(shareVC, animated: true, completion: nil)
-        
+        shareVC.modalPresentationStyle = UIModalPresentationStyle.Popover
+        shareVC.popoverPresentationController?.barButtonItem = choosePhotoButton
+        presentViewController(shareVC, animated: true, completion: nil)
     }
     
     @IBAction func didPressChoosePhotoButton(sender: UIBarButtonItem) {
@@ -107,11 +129,9 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
             UIAlertAction in
             self.openCamera()
         }
-        
         let libraryAction = UIAlertAction(title: "Choose Existing", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in
             self.openLibrary()
         }
-        
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (UIAlertAction) -> Void in
             //nothing
         }
@@ -120,117 +140,90 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
         alert.addAction(libraryAction)
         alert.addAction(cancelAction)
         
-        //phone only
-        if (UIDevice.currentDevice().userInterfaceIdiom == .Phone) {
-            self.presentViewController(alert, animated: true, completion: nil)
-        } else {
-           var choosePhotoPopover = UIPopoverController(contentViewController: alert)
-           choosePhotoPopover.presentPopoverFromBarButtonItem(choosePhotoButton, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
-        }
+        alert.modalPresentationStyle = UIModalPresentationStyle.Popover
+        alert.popoverPresentationController?.barButtonItem = choosePhotoButton
+        presentViewController(alert, animated: true, completion: nil)
     }
     
-    //helper functions for photo picker
+    // MARK: helper functions for photo picker
     func openCamera() {
         if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
             picker.sourceType = UIImagePickerControllerSourceType.Camera
             picker.allowsEditing = true
-            self.presentViewController(picker, animated: true, completion: nil)
+            presentViewController(picker, animated: true, completion: nil)
         } else {
-            self.openLibrary()
+            openLibrary()
         }
     }
     
     func openLibrary() {
         picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         picker.allowsEditing = true
-        if (UIDevice.currentDevice().userInterfaceIdiom == .Phone) {
-            self.presentViewController(picker, animated: true, completion: nil)
-        } else {
-            var choosePhotoPopover = UIPopoverController(contentViewController: picker)
-           choosePhotoPopover.presentPopoverFromBarButtonItem(choosePhotoButton, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
-
-        }
+        
+        picker.modalPresentationStyle = UIModalPresentationStyle.Popover
+        picker.popoverPresentationController?.barButtonItem = choosePhotoButton
+        presentViewController(picker, animated: true, completion: nil)
+        
     }
 
-    //after picking image
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
-        userImageView.image = (info[UIImagePickerControllerEditedImage] as UIImage)
-        //save original for reloading if need be
+    // after picking image
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        userImageView.image = (info[UIImagePickerControllerEditedImage] as! UIImage)
+        // save original for reloading if need be
         originalUserImage = userImageView.image?.copy() as? UIImage
         
-        picker.dismissViewControllerAnimated(true, completion: nil)
-        callToActionLabel.hidden = true
-        changeJenkinsImage()
-        jenkinsImageView.hidden = false
-    }
-
-    //allows multiple gestures at same time
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
-    
-    
-    //allow for shake
-    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
-        if (motion == UIEventSubtype.MotionShake && (userImageView.image != nil)) {
-            changeJenkinsImage()
-        }
+        self.callToActionLabel.hidden = true
+        optionsScrollView.hidden = false
+        picker.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.changeJenkinsImage()
+            self.jenkinsImageView.hidden = false
+        })
     }
     
     func changeJenkinsImage() {
-        //make sure to not get the same jenkins photo
-        let numberOfJenkinsPhotos = 12
+        // make sure to not get the same jenkins photo
         var newJenkinsNumber = -1
         if randomJenkins {
-            //generate randomly
-            newJenkinsNumber = Int(rand())%numberOfJenkinsPhotos + 1
-            while ((contains(pastJenkinsNumbers, newJenkinsNumber))) {
+            // generate randomly
+            newJenkinsNumber = Int(rand()) % numberOfJenkinsPhotos + 1
+            while ((pastJenkinsNumbers.contains(newJenkinsNumber))) {
                 newJenkinsNumber = Int(rand())%numberOfJenkinsPhotos + 1
-                //add to back of array and remove first element
+                // add to back of array and remove first element
                 pastJenkinsNumbers.append(newJenkinsNumber)
                 pastJenkinsNumbers.removeAtIndex(0)
             }
         } else {
-            //proceed in order
-            newJenkinsNumber = lastJenkinsNumber + 1 > numberOfJenkinsPhotos ? 1 : lastJenkinsNumber + 1
+            // proceed in order
+            newJenkinsNumber = (lastJenkinsNumber + 1 > numberOfJenkinsPhotos) ? 1 : lastJenkinsNumber + 1
             lastJenkinsNumber = newJenkinsNumber
         }
         if let image = UIImage(named: "Jenkins" + String(newJenkinsNumber) + ".png") {
             jenkinsImageView.image = image
             jenkinsImageView.hidden = false
-            optionsScrollView.hidden = false
         }
         
-        //clear old transforms
+        // clear old transforms
         resetJenkins(nil)
         
-        //jenkins animation
+        // jenkins animation
         jenkinsLabel.alpha = 1.0
-        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+        UIView.animateWithDuration(1.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
             self.jenkinsLabel.alpha = 0.0
             }, completion: nil)
-        //jenkins noise
+        // jenkins noise
         AudioServicesPlayAlertSound(jenkinsSound)
         
         shareButton.enabled = true
-        
     }
-    
-    
     
     func getJenkinsSound() {
-        //load sound
-        let soundURL = NSBundle.mainBundle().URLForResource("jenkins", withExtension: "wav")
-        AudioServicesCreateSystemSoundID(soundURL, &jenkinsSound)
-        
+        // load sound
+        if let soundURL = NSBundle.mainBundle().URLForResource("jenkins", withExtension: "wav") {
+            AudioServicesCreateSystemSoundID(soundURL, &jenkinsSound)
+        }
     }
     
-    //for motion
-    override func canBecomeFirstResponder() -> Bool {
-        return true
-    }
-    
-    //options
+    // mark: options buttons methods
     func resetJenkins(sender:UIButton!) {
         opacitySlider.value = 1.0
         isFlipped = false
@@ -242,8 +235,9 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
         })
 
     }
-    func resetEverything() {
-        let alert:UIAlertController=UIAlertController(title: "Do you want to reset the entire image?", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+    
+    func askToResetEverything(sender:UIButton!) {
+        let alert:UIAlertController=UIAlertController(title: "Do you want to reset the entire image?", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
         
         let resetEverythingAction = UIAlertAction(title: "Reset All", style: UIAlertActionStyle.Destructive) {
             UIAlertAction in
@@ -256,25 +250,19 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
         
         alert.addAction(resetEverythingAction)
         alert.addAction(cancelAction)
-        
-        //phone only
-        if (UIDevice.currentDevice().userInterfaceIdiom == .Phone) {
-            self.presentViewController(alert, animated: true, completion: nil)
-        } else {
-            var choosePhotoPopover = UIPopoverController(contentViewController: alert)
-            choosePhotoPopover.presentPopoverFromBarButtonItem(choosePhotoButton, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
-        }
+        presentViewController(alert, animated: true, completion: nil)
     }
+    
     func actuallyResetEverything() {
-        //fade out current jenkins
+        // fade out current jenkins
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             self.jenkinsImageView.alpha = 0
         })
-        //fade into old image
+        // fade into old image
         let animationDuration:NSTimeInterval = 0.5
         UIView.transitionWithView(self.userImageView, duration: animationDuration, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
             self.userImageView.image = self.originalUserImage
-        }, { (Bool) -> Void in
+        },completion:  { (Bool) -> Void in
             //bring back jenkins
             self.resetJenkins(nil)
             let animationDuration:NSTimeInterval = 0.5
@@ -290,10 +278,16 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
         })
         isFlipped = !isFlipped
     }
+    
     func MOARJenkins(sender:UIButton!) {
         userImageView.image = getOnscreenImage()
         changeJenkinsImage()
     }
+    
+    func chooseSpecificJenkins(sender:UIButton!) {
+        performSegueWithIdentifier("ChooseJenkinsSegue", sender: nil)
+    }
+    
     func showOpaqueSlider(sender:UIButton!) {
         opacitySliderView.hidden = false
         UIView.animateWithDuration(0.5, animations: { () -> Void in
@@ -301,20 +295,22 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
         })
         
     }
+    
     @IBAction func opacityDoneButtonPressed(sender: UIButton) {
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             self.opacitySliderView.alpha = 0.0
             })
     }
+    
     @IBAction func opacitySliderMoved(sender: UISlider) {
         jenkinsImageView.alpha = CGFloat(sender.value)
     }
     
-    
+    // MARK: UIViewController methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //initial repositionining and loading
+        // initial repositionining and loading
         jenkinsImageView.hidden = true
         callToActionLabel.adjustsFontSizeToFitWidth = true
         jenkinsLabel.alpha = 0.0
@@ -325,27 +321,34 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
         opacitySliderView.hidden = true
         opacitySliderView.alpha = 0.0
         
-        //create buttons within scroll view
+        // create buttons within scroll view
         var x:CGFloat = 0
-        var frame = CGRect()
-        let numberOfOptions:CGFloat = 4
-        let buttonSpacing:CGFloat = 10
-        let buttonMargin:CGFloat = 25
+        let buttonSpacing:CGFloat = 0 // on the bottom
+        var buttonMargin:CGFloat = 20 // between buttons and on the sides
         let buttonDimension:CGFloat = optionsScrollView.frame.size.height - 10 - buttonMargin
         let buttonCornerRadius:CGFloat = 15
         
-        let buttonArray = [OptionsButton(title: "Reset", pressAction: "resetJenkins:", longPressAction: "resetEverything", placementIndex: 0, iconName: "reset.png"), OptionsButton(title: "Mirror", pressAction: "mirrorJenkins:", longPressAction: nil, placementIndex: 1, iconName: "mirror.png"), OptionsButton(title: "MOAR", pressAction: "MOARJenkins:", longPressAction: nil, placementIndex: 2, iconName: "MOAR.png"), OptionsButton(title: "Opacity", pressAction: "showOpaqueSlider:", longPressAction: nil, placementIndex: 3, iconName: "opacity.png")]
+        let buttonArray = [OptionsButton(title: "Reset", pressAction: "resetJenkins:", longPressAction: "askToResetEverything:", placementIndex: 0, iconName: "reset.png"), OptionsButton(title: "Mirror", pressAction: "mirrorJenkins:", longPressAction: nil, placementIndex: 1, iconName: "mirror.png"), OptionsButton(title: "MOAR", pressAction: "MOARJenkins:", longPressAction: "chooseSpecificJenkins:", placementIndex: 2, iconName: "MOAR.png"), OptionsButton(title: "Opacity", pressAction: "showOpaqueSlider:", longPressAction: nil, placementIndex: 3, iconName: "opacity.png")]
+        
+        
+        // center buttons if they all fit on screen
+        let screenWidth = UIScreen.mainScreen().bounds.width
+        let totalButtonWidth = buttonDimension * CGFloat(buttonArray.count)
+        let projectedOptionsBarWidth = totalButtonWidth + (buttonMargin * CGFloat(buttonArray.count + 1)) // add 2 for each side
+        if (projectedOptionsBarWidth <= screenWidth) {
+            buttonMargin = (screenWidth - totalButtonWidth) / CGFloat(buttonArray.count + 1)
+        }
         
         for buttonStruct in buttonArray {
-            var button = UIButton()
+            let button = UIButton()
             button.layer.cornerRadius = buttonCornerRadius
             
             //place frame
             if (buttonStruct.placementIndex == 0) {
                 //first button has constant location
-                button.frame = CGRect(x: buttonSpacing, y: buttonSpacing, width: buttonDimension, height: buttonDimension)
+                button.frame = CGRect(x: buttonMargin, y: buttonSpacing, width: buttonDimension, height: buttonDimension)
             } else {
-                button.frame = CGRect(x: (buttonStruct.placementIndex * (buttonDimension +  buttonMargin) + buttonSpacing), y: buttonSpacing, width: buttonDimension, height: buttonDimension)
+                button.frame = CGRect(x: (buttonStruct.placementIndex * (buttonDimension + buttonMargin) + buttonMargin), y: buttonSpacing, width: buttonDimension, height: buttonDimension)
             }
             
             if let buttonPressAction = buttonStruct.pressAction {
@@ -358,7 +361,7 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
                 button.addGestureRecognizer(longPressRecognizer)
             }
             
-            var label = UILabel()
+            let label = UILabel()
             label.frame = button.frame
             label.frame.origin.y = label.frame.origin.y + buttonDimension
             label.text = buttonStruct.title
@@ -370,31 +373,13 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
             optionsScrollView.addSubview(button)
             optionsScrollView.addSubview(label)
             
-            //set width to last button
-            if (buttonStruct.placementIndex == numberOfOptions - 1) {
+            // set width to last button
+            if (Int(buttonStruct.placementIndex) == buttonArray.count - 1) {
                 x = CGRectGetMaxX(button.frame)
             }
 
         }
-        optionsScrollView.contentSize = CGSize(width: x + buttonSpacing, height: optionsScrollView.frame.size.height)
+        optionsScrollView.contentSize = CGSize(width: x + buttonMargin, height: optionsScrollView.frame.size.height)
         
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
 }
-
-//button struct
-struct OptionsButton {
-    var title = ""
-    var pressAction:Selector? = nil
-    var longPressAction:Selector? = nil
-    var placementIndex:CGFloat = -1
-    var iconName = ""
-}
-
-

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fpQ-f3-ztP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8187.4" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fpQ-f3-ztP">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8151.3"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -99,7 +100,9 @@
                                         </state>
                                         <variation key="default">
                                             <mask key="constraints">
+                                                <exclude reference="XWv-9Q-Ypu"/>
                                                 <exclude reference="cLG-rr-gJB"/>
+                                                <exclude reference="vJM-ku-Wnk"/>
                                             </mask>
                                         </variation>
                                         <connections>
@@ -111,39 +114,41 @@
                                 <constraints>
                                     <constraint firstItem="Fol-Rx-RCb" firstAttribute="leading" secondItem="tYv-pO-VOv" secondAttribute="leading" constant="8" id="1qd-Zr-P6a"/>
                                     <constraint firstAttribute="trailing" secondItem="Fol-Rx-RCb" secondAttribute="trailing" constant="8" id="BaM-m8-mEP"/>
-                                    <constraint firstAttribute="centerX" secondItem="AMg-uW-ovc" secondAttribute="centerX" id="D4r-8D-AH0"/>
-                                    <constraint firstItem="AMg-uW-ovc" firstAttribute="top" secondItem="Fol-Rx-RCb" secondAttribute="bottom" constant="13" id="GDV-6c-OmP"/>
+                                    <constraint firstItem="Fol-Rx-RCb" firstAttribute="trailing" secondItem="tYv-pO-VOv" secondAttribute="trailingMargin" id="E5K-rX-bBk"/>
                                     <constraint firstAttribute="height" constant="89" id="L0w-AU-SWw"/>
                                     <constraint firstAttribute="centerX" secondItem="Fol-Rx-RCb" secondAttribute="centerX" id="Mid-sU-iiy"/>
                                     <constraint firstItem="Fol-Rx-RCb" firstAttribute="top" secondItem="tYv-pO-VOv" secondAttribute="top" constant="8" id="eB4-Oa-lR7"/>
-                                    <constraint firstAttribute="bottom" secondItem="AMg-uW-ovc" secondAttribute="bottom" constant="8" id="h01-o5-SxO"/>
-                                    <constraint firstAttribute="centerX" secondItem="AMg-uW-ovc" secondAttribute="centerX" constant="-0.5" id="yfC-db-je2"/>
+                                    <constraint firstItem="AMg-uW-ovc" firstAttribute="centerX" secondItem="tYv-pO-VOv" secondAttribute="centerX" id="qcV-YK-PHn"/>
+                                    <constraint firstAttribute="bottom" secondItem="AMg-uW-ovc" secondAttribute="bottom" constant="8" id="uL1-Ho-JLd"/>
+                                    <constraint firstItem="Fol-Rx-RCb" firstAttribute="leading" secondItem="tYv-pO-VOv" secondAttribute="leadingMargin" id="waA-tw-7dI"/>
+                                    <constraint firstItem="Fol-Rx-RCb" firstAttribute="top" secondItem="tYv-pO-VOv" secondAttribute="topMargin" id="wxi-YH-FSl"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="L0w-AU-SWw"/>
-                                        <exclude reference="GDV-6c-OmP"/>
-                                        <exclude reference="yfC-db-je2"/>
+                                        <exclude reference="1qd-Zr-P6a"/>
+                                        <exclude reference="BaM-m8-mEP"/>
+                                        <exclude reference="eB4-Oa-lR7"/>
                                     </mask>
                                 </variation>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JENKINS!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Q5-V9-mkA">
-                                <rect key="frame" x="214" y="664" width="173" height="48"/>
+                                <rect key="frame" x="216" y="664" width="169" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose a photo using the button above" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="55Z-RX-rMi">
                                 <rect key="frame" x="0.0" y="285" width="600" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="kbf-1R-UAs" firstAttribute="bottom" secondItem="4Q5-V9-mkA" secondAttribute="top" id="1Jv-ab-9Di"/>
-                            <constraint firstAttribute="centerY" secondItem="55Z-RX-rMi" secondAttribute="centerY" constant="0.5" id="3Vq-hS-9Us"/>
+                            <constraint firstAttribute="centerY" secondItem="55Z-RX-rMi" secondAttribute="centerY" id="3Vq-hS-9Us"/>
                             <constraint firstAttribute="centerX" secondItem="kbf-1R-UAs" secondAttribute="centerX" id="Api-MK-t3a"/>
                             <constraint firstItem="4Q5-V9-mkA" firstAttribute="top" secondItem="2fi-mo-0CV" secondAttribute="bottom" constant="64" id="Dld-Ag-9qN"/>
                             <constraint firstItem="kbf-1R-UAs" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="EqV-zE-0Wb"/>
@@ -179,7 +184,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="action" id="o9Z-cr-Ime">
                             <connections>
-                                <action selector="didPressSaveButton:" destination="vXZ-lx-hvc" id="BPC-5l-dId"/>
+                                <action selector="didPressShareButton:" destination="vXZ-lx-hvc" id="jhm-dI-5Tm"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -194,6 +199,7 @@
                         <outlet property="shareButton" destination="o9Z-cr-Ime" id="wa2-8A-66A"/>
                         <outlet property="squareView" destination="kbf-1R-UAs" id="goU-w6-Wtb"/>
                         <outlet property="userImageView" destination="1t2-KI-MUa" id="9hV-R1-4Bi"/>
+                        <segue destination="BvB-tI-qFb" kind="presentation" identifier="ChooseJenkinsSegue" id="HwR-sh-L0W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -216,7 +222,42 @@
                     </connections>
                 </rotationGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="537" y="-525"/>
+            <point key="canvasLocation" x="537" y="-535"/>
+        </scene>
+        <!--Choose Jenkins Collection View Controller-->
+        <scene sceneID="mnE-rC-bzM">
+            <objects>
+                <collectionViewController id="BvB-tI-qFb" customClass="ChooseJenkinsCollectionViewController" customModule="Jenkins_Shake" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="vrS-tj-NC9">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Vml-ZK-7rI">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="584-yV-7fd">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="BvB-tI-qFb" id="brO-Kd-YYv"/>
+                            <outlet property="delegate" destination="BvB-tI-qFb" id="91q-7H-hA2"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="19f-pp-xrL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1294" y="-544"/>
         </scene>
     </scenes>
+    <color key="tintColor" red="0.0" green="0.16862745098039217" blue="0.35686274509803922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
