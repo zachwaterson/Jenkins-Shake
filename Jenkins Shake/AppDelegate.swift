@@ -7,16 +7,63 @@
 //
 
 import UIKit
+import Parse
+import Bolts
+
+public enum UserDefaults: String {
+    case RandomJenkins
+    case SendUsageData
+}
+
+enum ShortcutItems: String {
+    case Selfie = "com.zachwaterson.Jenkins-Shake.selfie"
+    case Photo = "com.zachwaterson.Jenkins-Shake.photo"
+    case Existing = "com.zachwaterson.Jenkins-Shake.existing"
+}
+
+protocol ShortcutDelegate {
+    func receiveSelfieShortcut()
+    func receivePhotoShortcut()
+    func receiveExistingShortcut()
+}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var outsideImageURL: NSURL?
+    
+    var shortcutDelegate: ShortcutDelegate?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        // register default preferences
+        let appDefaults = [UserDefaults.RandomJenkins.rawValue : false, UserDefaults.SendUsageData.rawValue : true]
+        NSUserDefaults.standardUserDefaults().registerDefaults(appDefaults)
+        
+        // color the bar
+        UINavigationBar.appearance().barTintColor = UIColor.JSBackgroundColor
+        
+        // Parse setup
+        Parse.setApplicationId("n7K1JnvwuHBLaw3dDnXSmg9thycR75jz4XNmIyd2", clientKey: "8m6kIVjRECzIJ2ssHdRwFmntbn1o0etG0gFHiY5i")
+        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+        
         // Override point for customization after application launch.
         return true
+    }
+    
+    @available(iOS 9, *)
+    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+        let type = ShortcutItems(rawValue: shortcutItem.type)!
+
+        switch type {
+        case ShortcutItems.Selfie:
+            shortcutDelegate?.receiveSelfieShortcut()
+        case ShortcutItems.Photo:
+            shortcutDelegate?.receivePhotoShortcut()
+        case ShortcutItems.Existing:
+            shortcutDelegate?.receiveExistingShortcut()
+        }
     }
 
     func applicationWillResignActive(application: UIApplication) {
