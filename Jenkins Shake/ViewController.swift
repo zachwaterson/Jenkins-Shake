@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import Parse
 
-let numberOfJenkinsPhotos = 13
+let numberOfJenkinsPhotos = 15
 
 // button struct
 struct OptionsButton {
@@ -200,10 +200,13 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        let oldJenkinsFrame = jenkinsImageView.frame
         UIView.animateWithDuration(0.3) { () -> Void in
             UINavigationBar.appearance().barTintColor = UIColor.JSBackgroundColor
         }
-        dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true) { () -> Void in
+            self.jenkinsImageView.frame = oldJenkinsFrame // to fix the weird bug
+        }
     }
     
     func newUserImage(image: UIImage) {
@@ -437,6 +440,21 @@ class ViewController: UIViewController, UIAlertViewDelegate, UINavigationControl
             }
         }
         optionsScrollView.contentSize = CGSize(width: x + buttonMargin, height: optionsScrollView.frame.size.height)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
+        if let selectedShortcut = (UIApplication.sharedApplication().delegate as? AppDelegate)?.selectedShortcut {
+            switch selectedShortcut {
+            case ShortcutItemTypes.Selfie:
+                receiveSelfieShortcut()
+            case ShortcutItemTypes.Photo:
+                receivePhotoShortcut()
+            case ShortcutItemTypes.Existing:
+                receiveExistingShortcut()
+            }
+            (UIApplication.sharedApplication().delegate as? AppDelegate)?.selectedShortcut = nil // wipe it since we handled it
+        }
     }
 }

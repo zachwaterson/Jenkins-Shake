@@ -15,7 +15,7 @@ public enum UserDefaults: String {
     case SendUsageData
 }
 
-enum ShortcutItems: String {
+enum ShortcutItemTypes: String {
     case Selfie = "com.zachwaterson.Jenkins-Shake.selfie"
     case Photo = "com.zachwaterson.Jenkins-Shake.photo"
     case Existing = "com.zachwaterson.Jenkins-Shake.existing"
@@ -34,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var outsideImageURL: NSURL?
     
     var shortcutDelegate: ShortcutDelegate?
+    var selectedShortcut: ShortcutItemTypes?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
@@ -48,20 +49,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.setApplicationId("n7K1JnvwuHBLaw3dDnXSmg9thycR75jz4XNmIyd2", clientKey: "8m6kIVjRECzIJ2ssHdRwFmntbn1o0etG0gFHiY5i")
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         
-        // Override point for customization after application launch.
+        // check for shortcut
+        if #available(iOS 9.0, *) {
+            if let shortcutItem = (launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem) {
+                selectedShortcut = ShortcutItemTypes(rawValue: shortcutItem.type)
+                return false // to not call performActionForShortcutItem
+            }
+        }
         return true
     }
     
+    // only called when the view is already loaded
     @available(iOS 9, *)
     func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
-        let type = ShortcutItems(rawValue: shortcutItem.type)!
-
-        switch type {
-        case ShortcutItems.Selfie:
+        let shortcut = ShortcutItemTypes(rawValue: shortcutItem.type)!
+        handleShortcut(shortcut)
+        completionHandler(true) // indicating that we handled the shortcut
+    }
+    
+    func handleShortcut(shortcut: ShortcutItemTypes) {
+        switch shortcut {
+        case ShortcutItemTypes.Selfie:
             shortcutDelegate?.receiveSelfieShortcut()
-        case ShortcutItems.Photo:
+        case ShortcutItemTypes.Photo:
             shortcutDelegate?.receivePhotoShortcut()
-        case ShortcutItems.Existing:
+        case ShortcutItemTypes.Existing:
             shortcutDelegate?.receiveExistingShortcut()
         }
     }

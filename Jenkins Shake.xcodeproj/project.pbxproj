@@ -18,6 +18,8 @@
 		9204F2A21A420411002DDC3E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9204F2A01A420411002DDC3E /* LaunchScreen.xib */; };
 		9204F2AE1A420411002DDC3E /* Jenkins_ShakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9204F2AD1A420411002DDC3E /* Jenkins_ShakeTests.swift */; };
 		9204F2C11A429268002DDC3E /* jenkins.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9204F2C01A429268002DDC3E /* jenkins.wav */; };
+		922AF4B51BC6CBF100FD2B42 /* Jenkins14.png in Resources */ = {isa = PBXBuildFile; fileRef = 922AF4B31BC6CBF100FD2B42 /* Jenkins14.png */; settings = {ASSET_TAGS = (); }; };
+		922AF4B61BC6CBF100FD2B42 /* Jenkins15.png in Resources */ = {isa = PBXBuildFile; fileRef = 922AF4B41BC6CBF100FD2B42 /* Jenkins15.png */; settings = {ASSET_TAGS = (); }; };
 		92661D131BA7C5E9002C3C82 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92661D121BA7C5E9002C3C82 /* Parse.framework */; };
 		92661D151BA7C602002C3C82 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92661D141BA7C602002C3C82 /* Bolts.framework */; };
 		92661D201BA7C656002C3C82 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92661D161BA7C656002C3C82 /* AudioToolbox.framework */; };
@@ -75,6 +77,8 @@
 		9204F2AC1A420411002DDC3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9204F2AD1A420411002DDC3E /* Jenkins_ShakeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jenkins_ShakeTests.swift; sourceTree = "<group>"; };
 		9204F2C01A429268002DDC3E /* jenkins.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = jenkins.wav; sourceTree = "<group>"; };
+		922AF4B31BC6CBF100FD2B42 /* Jenkins14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Jenkins14.png; sourceTree = "<group>"; };
+		922AF4B41BC6CBF100FD2B42 /* Jenkins15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Jenkins15.png; sourceTree = "<group>"; };
 		92661D121BA7C5E9002C3C82 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		92661D141BA7C602002C3C82 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		92661D161BA7C656002C3C82 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -213,6 +217,8 @@
 				92D507311A43C56200016232 /* Jenkins11.png */,
 				92D507321A43C56200016232 /* Jenkins12.png */,
 				9200EF2B1BA663CB00F21943 /* Jenkins13.png */,
+				922AF4B31BC6CBF100FD2B42 /* Jenkins14.png */,
+				922AF4B41BC6CBF100FD2B42 /* Jenkins15.png */,
 				92FA99781A79D70200895FA9 /* mirror.png */,
 				92FA997A1A79D96E00895FA9 /* reset.png */,
 				92FA997C1A79DBC200895FA9 /* MOAR.png */,
@@ -350,9 +356,11 @@
 				92D507361A43C56200016232 /* Jenkins4.png in Resources */,
 				92FA99791A79D70200895FA9 /* mirror.png in Resources */,
 				9204F29F1A420411002DDC3E /* Images.xcassets in Resources */,
+				922AF4B51BC6CBF100FD2B42 /* Jenkins14.png in Resources */,
 				92D5073E1A43C56200016232 /* Jenkins12.png in Resources */,
 				92ED3E9A1BA774E8001855A0 /* LaunchScreen.png in Resources */,
 				9200EF2E1BA6743000F21943 /* Settings.bundle in Resources */,
+				922AF4B61BC6CBF100FD2B42 /* Jenkins15.png in Resources */,
 				92D5073C1A43C56200016232 /* Jenkins10.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
